@@ -65,6 +65,9 @@ In the repository on GitHub, go to **Settings → Pages**. Under "Build and depl
 
 ## Credits and licenses
 
-- Created by Remi Kalir.
-- The Andika typeface is © SIL International and licensed under the SIL Open Font License 1.1 (see `fonts/OFL.txt`).
-- Licenses for OpenedCog's code and content are still to be decided.
+OpenedCog was created by Remi Kalir in collaboration with Claude.
+
+- **Code** is under the [MIT License](LICENSE).
+- **Content** is under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). That covers the puzzle items, explanations, spoken directions, tips, and guide text, including the verbal item banks and the wording inside `js/puzzles.js` and `js/app.js`. If you reuse or adapt them, credit "OpenedCog by Remi Kalir" and link to this repository.
+- **The Andika typeface** is © SIL International and licensed under the SIL Open Font License 1.1 (see `fonts/OFL.txt`).
+- **Contact:** open an issue on this repository.
