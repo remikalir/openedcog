@@ -2,7 +2,7 @@
 // Run it after adding or changing puzzle items that use emoji:
 //
 //   git clone --depth 1 --filter=blob:none --sparse https://github.com/jdecked/twemoji.git /tmp/twemoji
-//   git -C /tmp/twemoji sparse-checkout set --no-cone assets/svg LICENSE-GRAPHICS
+//   git -C /tmp/twemoji sparse-checkout set --no-cone /assets/svg/ /LICENSE-GRAPHICS
 //   node tools/update-emoji.mjs /tmp/twemoji
 //
 // It uses the same matching rules as the pictures() function in js/app.js.
@@ -16,9 +16,9 @@ if (!twemoji || !existsSync(join(twemoji, 'assets/svg'))) {
   console.error('Usage: node tools/update-emoji.mjs <path to a Twemoji checkout with assets/svg>');
   process.exit(1);
 }
-const EMOJI_RE = /\p{RI}\p{RI}|[#*0-9]️?⃣|\p{Extended_Pictographic}(?:️|\p{EMod})?(?:‍\p{Extended_Pictographic}(?:️|\p{EMod})?)*/gu;
-const isPicture = m => /\p{Emoji_Presentation}|️|‍|⃣|\p{RI}/u.test(m);
-const fileFor = m => [...(m.includes('‍') ? m : m.replace(/️/g, ''))].map(c => c.codePointAt(0).toString(16)).join('-') + '.svg';
+const EMOJI_RE = /\p{RI}\p{RI}|[#*0-9]\uFE0F?\u20E3|\p{Extended_Pictographic}(?:\uFE0F|\p{EMod})?(?:\u200D\p{Extended_Pictographic}(?:\uFE0F|\p{EMod})?)*/gu;
+const isPicture = m => /\p{Emoji_Presentation}|\uFE0F|\u200D|\u20E3|\p{RI}/u.test(m);
+const fileFor = m => [...(m.includes('\u200D') ? m : m.replace(/\uFE0F/g, ''))].map(c => c.codePointAt(0).toString(16)).join('-') + '.svg';
 
 const sources = ['index.html', ...readdirSync(join(root, 'js')).filter(f => f.endsWith('.js')).map(f => 'js/' + f)];
 const found = new Map();

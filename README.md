@@ -54,9 +54,11 @@ index.html        page shell, shared SVG patterns, footer with the non-affiliati
 css/app.css       all styles, including the self-hosted Andika font
 js/puzzles.js     the puzzle engine: verbal item banks and generators for the six number and shape subtests
 js/app.js         screens, read-aloud, scoring, the Grown-ups dashboard, storage, backup files
+js/pictures.js    swaps emoji for the bundled Twemoji pictures (shared by both pages)
+review.html       every verbal item with its answer, for reviewers (not linked from the practice site)
 fonts/            Andika (SIL International), with its license in fonts/OFL.txt
 emoji/            the Twemoji pictures the puzzles use (CC BY 4.0), with their license
-tools/            update-emoji.mjs: refreshes emoji/ after puzzle items change
+tools/            update-emoji.mjs refreshes emoji/; check-items.mjs checks the verbal item banks
 ```
 
 ### Pictures
@@ -65,7 +67,13 @@ The picture puzzles are written with ordinary emoji characters, which makes the 
 
 If you add or change items, run `tools/update-emoji.mjs` (instructions at the top of the file). It copies in any new pictures and warns you if Twemoji doesn't have one.
 
-The six quantitative and nonverbal subtests generate fresh puzzles every time, so practice never runs out. Each set moves from easier to harder. The three verbal subtests draw from fixed, hand-written banks in `js/puzzles.js` (the `PA`, `SC`, and `PC` arrays), and contributions to those banks are especially welcome.
+The six quantitative and nonverbal subtests generate fresh puzzles every time, so practice never runs out. Each set moves from easier to harder. The three verbal subtests draw from fixed, hand-written banks in `js/puzzles.js` (the `PA`, `SC`, and `PC` arrays). Picture Analogies has 46 items, Sentence Completion 60, and Picture Classification 51, plus two practice items each. Contributions to those banks are especially welcome.
+
+### Reviewing and adding verbal items
+
+- **Review:** open `review.html` on the site (for example `remikalir.github.io/openedcog/review.html`). It shows every verbal item with its pictures, its answer, and the explanation a child hears. Reviewers can flag an item by its ID, such as `PA-17`, in a GitHub issue.
+- **Add an item:** add it to the **end** of its array. The site remembers which items each child has seen by their position, so inserting or deleting in the middle would scramble that. Then run `tools/update-emoji.mjs` to bring in any new pictures, and `node tools/check-items.mjs` to catch common mistakes: a missing picture, duplicate choices, an answer repeated in the question, or a duplicate item.
+- **Check the pictures by eye** in `review.html`, too. Some Twemoji pictures look different from what you'd expect at small sizes. The nose, for example, looks like a bell.
 
 ## Publish with GitHub Pages
 

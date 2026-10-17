@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenedCog item review</title>
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A9%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/app.css">
+<style>
+  .rv-wrap{max-width:980px;margin:0 auto;padding:18px 16px 40px}
+  .rv-intro{background:var(--paper);border-radius:var(--radius);box-shadow:inset 0 0 0 2px var(--line);padding:18px 22px;margin:14px 0 22px}
+  .rv-intro li{margin:.3em 0}
+  .rv-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 8px}
+  .rv-tools label{display:flex;gap:6px;align-items:center;font-weight:700}
+  .rv-sub{margin:30px 0 6px}
+  .rv-count{color:var(--soft);font-size:.95rem;margin:0 0 12px}
+  .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+  .item{background:var(--paper);border-radius:12px;box-shadow:inset 0 0 0 2px var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+  .item.is-practice{box-shadow:inset 0 0 0 2px var(--line), inset 6px 0 0 var(--mid)}
+  .ihead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.85rem}
+  .iid{font-weight:700;font-family:ui-monospace,Menlo,Consolas,monospace}
+  .tags{display:flex;gap:6px}
+  .tag{border-radius:99px;padding:1px 9px;font-weight:700;background:var(--bg);color:var(--soft)}
+  .tag.new{background:var(--pick);color:var(--ink)}
+  .stem{font-size:40px;line-height:1.1;display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:52px}
+  .stem .op{font-size:22px;color:var(--soft);font-weight:700}
+  .q{font-size:1.05rem;font-weight:700;min-height:52px;display:flex;align-items:center}
+  .opts{display:flex;gap:8px}
+  .opt{font-size:34px;line-height:1;border-radius:10px;padding:6px;box-shadow:inset 0 0 0 2px var(--line);display:flex;align-items:center;justify-content:center;min-width:52px}
+  .opt.ok{box-shadow:inset 0 0 0 3px var(--leaf);background:var(--leaf-bg)}
+  .why{font-size:.9rem;color:var(--soft);margin:0}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<main class="rv-wrap">
+  <h1>OpenedCog: verbal item review</h1>
+  <div class="rv-intro">
+    <p>This page lists every item in the three picture-based (verbal) subtests. Each item shows its pictures, the four answer choices with the correct one outlined in green, and the explanation a child hears after answering in learning mode. The number, bead, shape, and paper-folding puzzles aren't listed because the site generates those fresh each time.</p>
+    <p><b>What to look for</b></p>
+    <ul>
+      <li><b>One right answer.</b> Could a thoughtful child defend a different choice? If so, the item needs fixing.</li>
+      <li><b>Clear pictures.</b> Would a seven-year-old recognize each picture as what the item intends?</li>
+      <li><b>Fair to every child.</b> Does the item assume knowledge some families wouldn't have, such as a region, climate, holiday, food, or experience?</li>
+      <li><b>Plain words.</b> Are the spoken question and the explanation easy to follow when heard, not read?</li>
+    </ul>
+    <p>To flag an item, note its ID (for example <span class="iid">PA-17</span>) and what concerns you. Then <a href="https://github.com/remikalir/openedcog/issues">open an issue on GitHub</a> or send it to whoever shared this page with you.</p>
+    <p class="muted" style="font-size:.9rem">This page is for reviewers, so it shows every answer. The practice site doesn't link to it.</p>
+  </div>
+  <div class="rv-tools">
+    <label><input type="checkbox" id="onlynew"> Show only items added in October 2026</label>
+  </div>
+  <div id="list"></div>
+</main>
+<footer class="site-foot">
+  <p><b>OpenedCog</b> is a free, independent, open resource. It is not affiliated with or endorsed by Riverside Insights, the publisher of the Cognitive Abilities Test. CogAT® is a registered trademark of Riverside Assessments, LLC. All puzzles here are original and are not real test items.</p>
+  <p>Created by Remi Kalir in collaboration with Claude. Content: CC BY 4.0. Pictures: <a href="https://github.com/jdecked/twemoji">Twemoji</a>, CC BY 4.0.</p>
+</footer>
+<script src="js/pictures.js"></script>
+<script src="js/puzzles.js"></script>
+<script>
+(() => {
+  // Bank sizes before the October 2026 additions; items at or past these positions are new.
+  const ORIGINAL = { pa: 16, sc: 22, pc: 16 };
+  const NAMES = { pa: ['PA', 'Picture Analogies', 'Picture pairs'], sc: ['SC', 'Sentence Completion', 'Listen and choose'], pc: ['PC', 'Picture Classification', 'Picture groups'] };
+  const LEVEL = ['Easier', 'Middle', 'Harder'];
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const opts = it => `<div class="opts">${[it.ans, ...it.d].sort((a, b) => a.localeCompare(b)).map(e => `<span class="opt ${e === it.ans ? 'ok' : ''}" ${e === it.ans ? 'title="Correct answer"' : ''}>${e}</span>`).join('')}</div>`;
+  const stem = (sub, it) => sub === 'pa'
+    ? `<div class="stem">${it.a}<span class="op">→</span>${it.b}<span class="op">as</span>${it.c}<span class="op">→ ?</span></div>`
+    : sub === 'pc' ? `<div class="stem">${it.set.join(' ')}</div>`
+    : `<p class="q">“${esc(it.q)}”</p>`;
+  let html = '';
+  for (const [sub, [bank, practice]] of Object.entries(G.banks)) {
+    const [code, name, kid] = NAMES[sub];
+    const card = (it, id, tags, cls) => `<div class="item ${cls}" data-new="${tags.includes('New') ? 1 : 0}"><div class="ihead"><span class="iid">${id}</span><span class="tags">${tags.map(t => `<span class="tag ${t === 'New' ? 'new' : ''}">${t}</span>`).join('')}</span></div>${stem(sub, it)}${opts(it)}<p class="why">${esc(it.why)}</p></div>`;
+    const newCount = bank.length - ORIGINAL[sub];
+    html += `<h2 class="rv-sub">${name} <span class="muted" style="font-weight:400">(“${kid}”)</span></h2><p class="rv-count">${bank.length} items, ${newCount} of them new, plus ${practice.length} practice items shown before pretend test days.</p><div class="items">`;
+    html += practice.map((it, i) => card(it, `${code}-P${i + 1}`, ['Practice'], 'is-practice')).join('');
+    html += bank.map((it, i) => card(it, `${code}-${i + 1}`, [LEVEL[it.lvl], ...(i >= ORIGINAL[sub] ? ['New'] : [])], '')).join('');
+    html += '</div>';
+  }
+  const list = document.getElementById('list');
+  list.innerHTML = html;
+  pictures(document.body);
+  document.getElementById('onlynew').addEventListener('change', e => {
+    list.querySelectorAll('.item').forEach(el => el.classList.toggle('hidden', e.target.checked && el.dataset.new !== '1'));
+  });
+})();
+</script>
+</body>
+</html>
