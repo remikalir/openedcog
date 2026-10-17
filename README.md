@@ -25,7 +25,7 @@ OpenedCog is a static website that gives children practice with all nine subtest
 
 ## Privacy, precisely
 
-- The site has **no accounts, analytics, cookies, ads, or third-party scripts or fonts**. Every file it loads comes from this site.
+- The site has **no accounts, analytics, cookies, ads, or third-party scripts, fonts, or images**. Every file it loads, including the font and the pictures, comes from this site.
 - A child's progress is saved in the browser's `localStorage`, under the key `openedcog:v1`, **on that device only**. The site never sends it anywhere.
 - Grown-ups can save a **backup file** (JSON) and load it on another device. The file contains the children's names (or nicknames) and their practice results, so it should be kept private.
 - **What we don't control:**
@@ -55,7 +55,15 @@ css/app.css       all styles, including the self-hosted Andika font
 js/puzzles.js     the puzzle engine: verbal item banks and generators for the six number and shape subtests
 js/app.js         screens, read-aloud, scoring, the Grown-ups dashboard, storage, backup files
 fonts/            Andika (SIL International), with its license in fonts/OFL.txt
+emoji/            the Twemoji pictures the puzzles use (CC BY 4.0), with their license
+tools/            update-emoji.mjs: refreshes emoji/ after puzzle items change
 ```
+
+### Pictures
+
+The picture puzzles are written with ordinary emoji characters, which makes the item banks easy to read and edit. Device emoji look different on every phone and tablet, though, and older devices are missing newer ones, so a child could see a different picture, or an empty box, than another child. So the site replaces each emoji with the same openly licensed [Twemoji](https://github.com/jdecked/twemoji) picture, bundled in `emoji/` and served from this site. Every family sees the same pictures on any device. Each picture keeps its emoji as alt text, so screen readers still announce it by name.
+
+If you add or change items, run `tools/update-emoji.mjs` (instructions at the top of the file). It copies in any new pictures and warns you if Twemoji doesn't have one.
 
 The six quantitative and nonverbal subtests generate fresh puzzles every time, so practice never runs out. Each set moves from easier to harder. The three verbal subtests draw from fixed, hand-written banks in `js/puzzles.js` (the `PA`, `SC`, and `PC` arrays), and contributions to those banks are especially welcome.
 
@@ -69,5 +77,6 @@ OpenedCog was created by Remi Kalir in collaboration with Claude.
 
 - **Code** is under the [MIT License](LICENSE).
 - **Content** is under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). That covers the puzzle items, explanations, spoken directions, tips, and guide text, including the verbal item banks and the wording inside `js/puzzles.js` and `js/app.js`. If you reuse or adapt them, credit "OpenedCog by Remi Kalir" and link to this repository.
+- **Pictures** are from [Twemoji](https://github.com/jdecked/twemoji), © Twitter, Inc. (2014–2021) and Jason Sofonia & Justine De Caires (2022–present), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The same license as OpenedCog's own content.
 - **The Andika typeface** is © SIL International and licensed under the SIL Open Font License 1.1 (see `fonts/OFL.txt`).
 - **Contact:** open an issue on this repository.

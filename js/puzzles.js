@@ -190,7 +190,7 @@ const G = (() => {
 
   // ---------- NUMBER SERIES (beads) ----------
   function rod(n, max = 10) {
-    const h = max * 13 + 24, W = 34; let s = `<svg class="rod" viewBox="0 0 ${W} ${h}" width="${W}" height="${h}" aria-label="${n} beads"><line x1="${W / 2}" y1="4" x2="${W / 2}" y2="${h - 4}" style="stroke:var(--rod);stroke-width:3;stroke-linecap:round"/>`;
+    const h = max * 13 + 24, W = 34; let s = `<svg class="rod" viewBox="0 0 ${W} ${h}" width="${W}" height="${h}" role="img" aria-label="${n} beads"><line x1="${W / 2}" y1="4" x2="${W / 2}" y2="${h - 4}" style="stroke:var(--rod);stroke-width:3;stroke-linecap:round"/>`;
     for (let i = 0; i < n; i++) s += `<circle cx="${W / 2}" cy="${h - 12 - i * 13 - (i >= 5 ? 6 : 0)}" r="6.2" style="fill:var(--bead);stroke:var(--ink);stroke-width:1.2"/>`;
     return s + '</svg>';
   }

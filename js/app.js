@@ -1,6 +1,43 @@
 (() => {
 'use strict';
 const $app = document.getElementById('app');
+// ---------- pictures: Twemoji, bundled with the site ----------
+// Device emoji look different on every phone and tablet, and older devices are missing newer ones.
+// So after each screen renders, every emoji is swapped for the same open-licensed Twemoji picture
+// (CC BY 4.0, https://github.com/jdecked/twemoji), served from this site's emoji/ folder.
+// The emoji character stays as the picture's alt text, so screen readers still announce it by name.
+const EMOJI_RE = /\p{RI}\p{RI}|[#*0-9]️?⃣|\p{Extended_Pictographic}(?:️|\p{EMod})?(?:‍\p{Extended_Pictographic}(?:️|\p{EMod})?)*/gu;
+const isPicture = m => /\p{Emoji_Presentation}|️|‍|⃣|\p{RI}/u.test(m); // leaves text symbols like ★ © ® alone
+const emojiFile = m => {
+  const cps = [...(m.includes('‍') ? m : m.replace(/️/g, ''))].map(c => c.codePointAt(0).toString(16));
+  return 'emoji/' + cps.join('-') + '.svg';
+};
+function pictures(root) {
+  const nodes = [];
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  for (let n = w.nextNode(); n; n = w.nextNode()) {
+    const p = n.parentNode;
+    if (!p || p.closest('svg, script, style, textarea, option')) continue;
+    EMOJI_RE.lastIndex = 0;
+    if (EMOJI_RE.test(n.nodeValue)) nodes.push(n);
+  }
+  for (const n of nodes) {
+    const text = n.nodeValue, frag = document.createDocumentFragment();
+    let last = 0; EMOJI_RE.lastIndex = 0;
+    for (let m; (m = EMOJI_RE.exec(text));) {
+      if (!isPicture(m[0])) continue;
+      if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+      const img = document.createElement('img');
+      img.className = 'emoji'; img.alt = m[0]; img.draggable = false; img.decoding = 'async';
+      img.src = emojiFile(m[0]);
+      frag.appendChild(img);
+      last = m.index + m[0].length;
+    }
+    if (last === 0) continue;
+    if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+    n.parentNode.replaceChild(frag, n);
+  }
+}
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
 // ---------- catalog ----------
@@ -279,6 +316,7 @@ function render() {
   const fn = { home: vHome, welcome: vWelcome, pick: vPick, intro: vIntro, q: vQuestion, ready: vReady, brk: vBreak, results: vResults, review: vReview, parent: vParent, gate: vGate, howto: vHowto }[view];
   $app.innerHTML = fn();
   if (modal) $app.insertAdjacentHTML('beforeend', modal.html);
+  pictures($app);
   const f = $app.querySelector('[data-autofocus]'); if (f) f.focus();
 }
 
@@ -378,7 +416,7 @@ function vQuestion() {
   <button class="hear ${run.speaking ? 'playing' : ''}" data-act="hear" aria-label="Hear the question again">🔊 Hear it again</button></div>
   <div class="qmain"><div class="stim pop">${it.stim}</div>
   ${showCaption ? `<div class="caption">${esc(it.prompt)}</div>` : ''}
-  <div class="answers" role="radiogroup" aria-label="Answer choices">${it.choices.map((c, i) => `<button class="ans ${ansCls(i)}" role="radio" aria-checked="${sel === i}" aria-label="Answer ${'ABCD'[i]}" data-act="choose" data-i="${i}" ${fbm && checked ? 'disabled' : ''}><div class="ai">${c}</div><span class="bub">${'ABCD'[i]}</span></button>`).join('')}</div>
+  <div class="answers" role="radiogroup" aria-label="Answer choices">${it.choices.map((c, i) => `<button class="ans ${ansCls(i)}" role="radio" aria-checked="${sel === i}" data-act="choose" data-i="${i}" ${fbm && checked ? 'disabled' : ''}><span class="sr-only">Answer ${'ABCD'[i]}: </span><div class="ai">${c}</div><span class="bub" aria-hidden="true">${'ABCD'[i]}</span></button>`).join('')}</div>
   ${fb}</div>
   <div class="qfoot"><div>${!fbm && run.qi > 0 ? '<button class="btn" data-act="back">Back</button>' : '<button class="link" data-act="quit">Stop</button>'}</div>
   <button class="btn primary go" data-act="${goAct}" ${goDis ? 'disabled' : ''}>${goLabel}</button></div></div>`;
@@ -585,6 +623,7 @@ function openModal(kind) {
   }[kind];
   modal = { kind, html: `<div class="scrim" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="modal pop"><h2 id="mt">${esc(txt[0])}</h2><p>${esc(txt[1])}</p><div class="row"><button class="btn" data-act="mcancel">${esc(txt[3])}</button><button class="btn primary" data-act="${kind === 'reset' ? 'mreset' : kind === 'removekid' ? 'mremove' : 'mconfirm'}" data-autofocus>${esc(txt[2])}</button></div></div></div>` };
   $app.insertAdjacentHTML('beforeend', modal.html);
+  pictures($app.querySelector('.scrim'));
   const f = $app.querySelector('.scrim [data-autofocus]'); if (f) f.focus();
   if (kind === 'done') Voice.say(txt[0] + ' ' + txt[1]);
 }
