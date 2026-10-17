@@ -1,0 +1,5 @@
+.DS_Store
+# private family data (backup files, notes) never goes in the repository
+private/
+*.backup.json
+openedcog-backup-*.json
