@@ -6,7 +6,9 @@ OpenedCog is a static website that gives children practice with all nine subtest
 
 > OpenedCog is an independent resource. It is not affiliated with or endorsed by Riverside Insights, the publisher of the Cognitive Abilities Test. CogAT® is a registered trademark of Riverside Assessments, LLC. Every puzzle here is original and written to match the published format. None are real test items.
 
-**Status:** early development. The public site will live at `https://remikalir.github.io/openedcog/`.
+**Site:** <https://remikalir.github.io/openedcog/>
+
+**For families:** the [parent guide](https://remikalir.github.io/openedcog/guide.html) walks through coaching a child step by step. The [FAQ](https://remikalir.github.io/openedcog/faq.html) answers common questions, and [About](https://remikalir.github.io/openedcog/about.html) explains why the project exists.
 
 ## What practice can and can't do
 
@@ -50,7 +52,10 @@ Then open <http://localhost:8000>.
 ## How it's organized
 
 ```
-index.html        page shell, shared SVG patterns, footer with the non-affiliation statement
+index.html        the practice app: page shell, shared SVG patterns, footer with the non-affiliation statement
+guide.html        parent guide (printable)
+faq.html          frequently asked questions
+about.html        why OpenedCog exists, by Remi Kalir
 css/app.css       all styles, including the self-hosted Andika font
 js/puzzles.js     the puzzle engine: verbal item banks and generators for the six number and shape subtests
 js/app.js         screens, read-aloud, scoring, the Grown-ups dashboard, storage, backup files
@@ -82,6 +87,8 @@ In the repository on GitHub, go to **Settings → Pages**. Under "Build and depl
 ## Credits and licenses
 
 OpenedCog was created by Remi Kalir in collaboration with Claude.
+
+- **Authorship of the pages:** Claude first drafted the parent guide and the FAQ, and Remi Kalir reviewed and edited both before publication. Remi Kalir wrote the About page himself.
 
 - **Code** is under the [MIT License](LICENSE).
 - **Content** is under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). That covers the puzzle items, explanations, spoken directions, tips, and guide text, including the verbal item banks and the wording inside `js/puzzles.js` and `js/app.js`. If you reuse or adapt them, credit "OpenedCog by Remi Kalir" and link to this repository.

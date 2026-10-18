@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About · OpenedCog</title>
+<meta name="description" content="Why OpenedCog exists: a free, open CogAT® Level 8 practice site, by Remi Kalir.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A9%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="draft-banner" role="note">Draft. Written by Remi Kalir.</div>
+<nav class="docnav" aria-label="OpenedCog pages">
+  <a class="brand" href="./">🧩 OpenedCog</a>
+  <a href="./">Practice</a>
+  <a href="guide.html">Parent guide</a>
+  <a href="faq.html">FAQ</a>
+  <a href="about.html" aria-current="page">About</a>
+</nav>
+<main class="doc">
+<h1>About OpenedCog</h1>
+<!-- Written by Remi Kalir. Placed as written; markup only. -->
+<p>When I was a student in high school, I spent thousands of dollars—which I earned stocking shelves and sweeping floors at a local grocer—to enroll in an SAT prep course. It didn’t help, my score stunk, and the money was wasted. Thank goodness I was accepted into Earlham, a liberal arts college that placed little value on such standardized measures of intelligence or capability.</p>
+<p>Twenty years ago, when I taught middle school in the South Bronx, my students were ill-prepared to take New York State’s standardized exams in mathematics and literacy. Part of that was my fault—I was a novice educator, I lacked pedagogical competence, and I failed to focus my students’ collective energies and motivation on such a formal academic assessment. But it wasn’t just my instructional shortcomings. The exam was biased. I recall a series of reading comprehension questions associated with a passage about an orchestra. Most of the questions asked about the conductor. Of course, the only “conductor” my students were familiar with was the individual who drove the subway train. My students, in general, didn’t perform well on the exam and I know that further impeded their educational pathways.</p>
+<p>A few months, in mid September of 2026, my wife and I received a letter from our seven-year old son’s public school. All second-grade students were to be screened in an “aptitude assessment” in order to “determine eligibility for gifted identification.” We received the letter on a Friday afternoon, it was crumpled at the bottom of his backpack, and in reading it we learned that the assessment was to be administered in about two weeks. The letter was mostly bureaucratic and raised more questions than it answered. But no worries, for we were told: “Please encourage your child to relax and do their best. Plenty of sleep and a healthy breakfast may be helpful before testing.”</p>
+<p>My wife and I are both former K-12 educators. We’re both trained educational researchers. I’m a former professor; my wife is a professor. We’re not unaccustomed to the realities and complexities of standardized assessment.</p>
+<p>But it’s different as a parent. It’s different because we know these assessments like the CogAt are limited by design to capture but a sliver of childhood intellect and ability (to say nothing of curiosity and creativity), and we also know that these assessments are tools used to codify educational inequality. And the weight of such assessment, now, would burden the small shoulders of our only child. Gifted. Talented. Intelligent. Aptitude and ability. These are all social constructs that reflect dominant culture biases about what knowledge is, whose knowledge counts, how that knowledge may be competently demonstrated, and what then happens with particular measures of knowledge to sort and stratify children.</p>
+<p>And yet we know it matters. Or that it matters if we’re willing to play a particular game of schooling or, more specifically, if we’re to model for our children why it may be valuable to play that game. And so, on that Friday evening, about ten minutes after we pulled the letter from our son’s backpack to read and talk with him, my wife turned to me and asked, “Why don’t we just ask Claude?”</p>
+<p>You see, over the past nine months I’ve been regularly using agentic AI to build a variety of personal and professional projects. Why not build a little kid-friendly app to help our son prep for the CogAt Level 8? So that’s exactly what I did, and that’s why OpenedCog now exists.</p>
+<p>The initial build took Claude just about 15 minutes. I shared a photo of the letter we received, wrote a single prompt, and Claude was off and running. Our son started what we called “puzzle practice” the very next day. Over the course of about two weeks, Claude and I made a few feature refinements because our son’s use provided immediate feedback on the design. For the sake of transparency, here’s what we did as a family as recorded by the app and documented by Claude: “Between September 19 and October 5, NAME used it for 37 sessions. He worked through all nine subtests in learning mode, then ran four rounds of pretend test days. He walked into the October 6–8 screening having seen and solved every format on the test.” Most of those 37 sessions lasted, on average, about 2 to 3 minutes.</p>
+<p>Of course, this was never about prediction, some hoped for score, or the fallacy that a vibe-coded app could secure placement for our son in our public school’s gifted and talented program. Rather, this was about familiarity with the format. My wife and I didn’t want our son sitting for three “batteries” of an assessment lacking familiarity with how the puzzles would look, what directions he’d receive, and what types of problems he’d be expected to solve. That core commitment—familiarity—drove Claude’s design. Because here’s what practice can and can’t do as noted by Claude:</p>
+<ul>
+<li>The goal is familiarity with the format: how the puzzles look, how the directions sound, and how to move through a test. That way a child's score reflects their reasoning, not surprise or nerves.</li>
+<li>Practice scores do not predict a child's percentile, score, or placement.</li>
+<li>Keep sessions short and stop while it's still fun. This is practice for a young child, not a drill.</li>
+</ul>
+<p>At some point during the 37 sessions that our son completed, I realized it would be necessary to share some version of our family’s private puzzle practice app with the world. There are too many well-documented social advantages and financial privileges that some families wield to ensure their children benefit from the established stratification of American education. Tutoring. Private schools. Access to and use of learning technologies including, increasingly, AI. Creating an openly accessible version of what I designed for my son won’t materially disrupt deeply entrenched educational, social, and economic inequalities that compound upon systematically disadvantaged children. But, perhaps, a family or two will come across OpenedCog and use it, and perhaps also improve it (for the code is open), so that their second-grade child is a bit more prepared to take the CogAt Level 8.</p>
+<p>In deciding to code and share OpenedCog, Claude and I identified and enacted six guiding principles that operated as filters on every decision. I’m including these here, at length and verbatim, and as authored by Claude, to model how a parent (me) and an algorithm (Claude) can make sense of a design opportunity and create something tangible that may be of use to others:</p>
+<blockquote class="principles">
+<p>“Honesty. We can't promise that practice predicts or improves a child's result. Three claims appear wherever they're relevant:</p>
+<ul>
+<li>The puzzles are original and modeled on the published test format. They are not real test items.</li>
+<li>Practice scores don't predict a child's percentile or placement.</li>
+<li>The goal is familiarity with the format, so the score reflects the child's reasoning, not a higher score.</li>
+</ul>
+<p>Honesty also covers the platform's own limits, including on-device storage, browser behavior, and what we can't control.</p>
+<p>Access and accessibility. The principle covers both meanings of the word.</p>
+<ul>
+<li>Access: the site is free with no account, and it reaches families who don't know the prep industry exists.</li>
+<li>Accessibility: we target WCAG 2.2 AA for everything around the puzzles, including navigation, contrast, keyboard use, labels, and read-aloud.</li>
+</ul>
+<p>One honest limit belongs in the public language. The nonverbal and quantitative puzzles are visual reasoning tasks by design, so a screen reader can't fully convey them, just as the test itself can't. Families who need testing accommodations should work with their school. Spanish is a planned addition, not a launch feature.</p>
+<p>Ease of use. Families of any technical skill can start in under a minute. That means:</p>
+<ul>
+<li>nothing to install, no sign-up, works on a slow connection.</li>
+<li>works on phones, tablets, older school Chromebooks, and laptops.</li>
+<li>every instruction written for a parent who has never heard of the CogAT, which is where our own family started.</li>
+</ul>
+<p>Privacy. We collect nothing. Progress lives only on the family's device. The public privacy statement says exactly what is true and names the limits we don't control:</p>
+<ul>
+<li>The host keeps standard server logs. GitHub Pages logs visitors' IP addresses for security purposes.</li>
+<li>Some browsers' read-aloud voices are cloud-based and send the spoken puzzle text to the browser maker. That text contains no information about the child.</li>
+</ul>
+<p>Every privacy claim is checked against the code before it is published.</p>
+<p>Openness. The code is public. The content (puzzles, guides, explanations) is openly licensed. Anyone can check the work, adapt it, translate it, or run their own copy. Openness is also the most realistic route to a Spanish version and to versions for other test levels.</p>
+<p>The child's experience comes first. This is practice for a seven-year-old, not a drill. The parent guide passes on what Ade's prep taught us:</p>
+<ul>
+<li>Keep sessions short.</li>
+<li>Fatigue shows up late in a long sitting. Ade's one notable dip came in the third part of a 48-puzzle session and disappeared when he did the same subtest fresh the next morning.</li>
+<li>Watch for rushing, not just accuracy.</li>
+<li>Stop while it's still fun.”</li>
+</ul>
+</blockquote>
+<p>This is, ultimately, a proof of concept that raises some rather interesting and troubling questions:</p>
+<ul>
+<li>As a parent, will I continually use AI to create just-in-time apps and micro learning activities to better prepare my son for the many assessment hoops he’ll be asked to jump through?</li>
+<li>Then again, at what point will my son start making those very apps for himself?</li>
+<li>Because my ongoing AI use in service of my son’s academic performance is a blatant exercise of privilege, how might I also make use of my technical skills and educational know-how to potentially benefit other families?</li>
+<li>How are other parents creating small-scale and privacy-forward AI solutions for their own children?</li>
+<li>And how might this project nudge other families away from purchasing AI products that infringe upon a child and their family’s privacy?</li>
+<li>If parents are designing and using these types of AI apps with their children, should debate about academic integrity be reframed as a multi-generational concern?</li>
+<li>In making the OpenedCog app and code base open, might I potentially widened educational disparities because of the types of families who may most likely find, use, and improve this type of technology?</li>
+</ul>
+<p>I really do want you to use and improve OpenedCog. I hope it helps, even minimally, your child gain some familiarity with a standardized assessment. But please know that a child’s many gifts and talents can never be fully captured nor measured by a series of “batteries” that fundamentally constrain the true beauty and diversity of our children’s intelligence, curiosity, and wisdom.</p>
+<p class="signature">- Remi, parent, educator, and Claude collaborator, October 17, 2026</p>
+<p class="credit">Written by Remi Kalir.</p>
+</main>
+<footer class="site-foot">
+  <p><b>OpenedCog</b> is a free, independent, open resource. It is not affiliated with or endorsed by Riverside Insights, the publisher of the Cognitive Abilities Test. CogAT® is a registered trademark of Riverside Assessments, LLC. All puzzles here are original and are not real test items.</p>
+  <p>Created by Remi Kalir in collaboration with Claude. <a href="https://github.com/remikalir/openedcog">Source code on GitHub</a> (code: MIT; content: CC BY 4.0). Pictures: <a href="https://github.com/jdecked/twemoji">Twemoji</a>, CC BY 4.0.</p>
+</footer>
+<script src="js/pictures.js"></script>
+<script>pictures(document.body);</script>
+</body>
+</html>

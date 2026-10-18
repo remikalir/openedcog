@@ -289,6 +289,7 @@ function vWelcome() {
   <form class="row" data-form="name"><input class="name-in" name="n" maxlength="24" placeholder="First name" autocomplete="off" data-autofocus aria-label="Child's first name">
   <button class="btn primary" type="submit">Start</button></form>
   <p class="muted" style="margin-top:18px;font-size:.9rem">Grown-ups: type your child's first name or a nickname. It stays on this device. You can add more children later.</p>
+  <p class="muted" style="font-size:.9rem">New to the CogAT? Read the <a href="guide.html">parent guide</a> or the <a href="faq.html">FAQ</a>.</p>
   <p class="muted" style="font-size:.9rem">Moving from another device? <button class="link" data-act="import">Load a backup file</button><input id="importfile" class="sr-only" type="file" accept=".json,application/json" tabindex="-1" aria-hidden="true"></p>
   <p id="backupmsg" class="muted" role="status" style="min-height:1.4em"></p>
   ${storageOK ? '' : '<p class="warn">This browser isn\'t letting the site save anything (this can happen in private browsing). Puzzles will work, but progress will be lost when you close the page.</p>'}</div>`;
@@ -313,7 +314,8 @@ function vHome() {
   <div class="days">${Object.entries(FAMS).map(([k, f]) => `<button class="day" data-act="test" data-fam="${k}"><span class="dnum">${f.off}</span><span class="dname">${f.kid}</span><span class="demo" aria-hidden="true">${f.emo}</span><span class="dlast">3 parts, ${S.settings.n} puzzles each. ${lastTest(k)}</span></button>`).join('')}</div>
   <h2 class="sect">Practice one kind of puzzle</h2>
   ${Object.values(FAMS).map(f => `<div class="fam"><div class="fam-name">${f.kid}</div><div class="tiles">${f.subs.map(tile).join('')}</div></div>`).join('')}
-  <p class="muted" style="margin-top:18px;font-size:.9rem">Practice mode tells you right away if you got it and why. Test day mode works like the real test: nobody tells you until the end.</p>`;
+  <p class="muted" style="margin-top:18px;font-size:.9rem">Practice mode tells you right away if you got it and why. Test day mode works like the real test: nobody tells you until the end.</p>
+  <p class="grownup-links"><b>For grown-ups:</b> <a href="guide.html">Parent guide</a> · <a href="faq.html">FAQ</a> · <a href="about.html">About</a></p>`;
 }
 
 function vHowto() {
@@ -425,7 +427,7 @@ function vParent() {
   };
   const marks = s => s.items ? `<div class="marks" aria-label="${s.items.map(x => x.c ? 'right' : 'wrong').join(', ')}">${s.items.map(x => `<i class="${x.c ? 'ok' : 'no'}" title="${x.s}s${x.r ? ', ' + x.r + ' replay' + (x.r > 1 ? 's' : '') : ''}${x.ch ? ', changed answer' : ''}"></i>`).join('')}</div>` : '<span class="muted">—</span>';
   const recent = S.sessions.slice(-15).reverse().map(s => `<tr><td>${fmtDate(s.ts)}</td><td>${SUBS[s.sub] ? SUBS[s.sub].off : s.sub}</td><td>${s.mode === 'test' ? 'Test day' : 'Learning'}</td><td>${s.correct}/${s.n}</td><td>${Math.round((s.secs || 0) / 60 * 10) / 10} min</td><td>${marks(s)}</td><td>${halves(s)}</td></tr>`).join('');
-  return `<div class="pp"><div class="top"><div><h1>Grown-ups: ${esc(S.name)}</h1><p class="sync">Progress is saved only in this browser, on this device. Nothing is sent anywhere.</p></div><div class="top-actions"><button class="btn primary" data-act="home">Back to puzzles</button></div></div>
+  return `<div class="pp"><div class="top"><div><h1>Grown-ups: ${esc(S.name)}</h1><p class="sync">Progress is saved only in this browser, on this device. Nothing is sent anywhere.</p><p class="sync"><a href="guide.html">Parent guide</a> · <a href="faq.html">FAQ</a> · <a href="about.html">About</a></p></div><div class="top-actions"><button class="btn primary" data-act="home">Back to puzzles</button></div></div>
   <h2>Progress by subtest</h2>
   <div class="tablewrap"><table><thead><tr><th>Subtest</th><th>Runs</th><th>Last</th><th>Best</th><th>Recent</th><th>Avg per puzzle</th></tr></thead><tbody>${rows}</tbody></table></div>
   <p class="muted" style="font-size:.9rem">Scores include both modes. In learning mode, only first tries count. A very low time per puzzle alongside misses usually means rushing.</p>

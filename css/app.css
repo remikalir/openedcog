@@ -219,3 +219,49 @@ th{font-weight:700;color:var(--soft);font-size:.85rem}
 /* Twemoji pictures (bundled in emoji/). 1em tall, so they size exactly like the emoji text they replace. */
 img.emoji{display:inline-block;height:1em;width:1em;margin:0 .04em;vertical-align:-0.12em;user-select:none}
 .emo img.emoji,.objs img.emoji{vertical-align:middle}
+
+/* ---------- reading pages: parent guide, FAQ, About ---------- */
+.doc{max-width:760px;margin:0 auto;padding:12px 16px 40px;font-size:17px;line-height:1.6}
+.docnav{max-width:760px;margin:0 auto;padding:14px 16px 0;display:flex;gap:6px 18px;flex-wrap:wrap;align-items:baseline;font-size:.95rem}
+.docnav a{color:var(--accent);font-weight:700;text-decoration:none}
+.docnav a:hover{text-decoration:underline}
+.docnav a[aria-current="page"]{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.docnav .brand{font-size:1.15rem;color:var(--ink);margin-right:auto}
+.doc h1{font-size:2.1rem;margin:18px 0 6px}
+.doc .lede{font-size:1.15rem;color:var(--soft);margin:0 0 18px}
+.doc h2{font-size:1.45rem;margin:38px 0 8px;padding-top:6px;border-top:2px solid var(--line)}
+.doc h3{font-size:1.12rem;margin:24px 0 4px}
+.doc p,.doc li{max-width:68ch}
+.doc ul,.doc ol{padding-left:1.3em}
+.doc li{margin:.25em 0}
+.doc a{color:var(--accent)}
+.doc table{font-size:.95rem;margin:10px 0 6px}
+.doc th,.doc td{vertical-align:top}
+.doc .callout{background:var(--paper);border-radius:12px;box-shadow:inset 0 0 0 2px var(--line);padding:12px 18px;margin:14px 0}
+.doc .callout.key{box-shadow:inset 0 0 0 2px var(--line), inset 6px 0 0 var(--accent)}
+.doc .toc{columns:2 220px;padding-left:1.2em;margin:6px 0 0}
+.doc details{background:var(--paper);border-radius:12px;box-shadow:inset 0 0 0 2px var(--line);padding:2px 16px;margin:8px 0}
+.doc details[open]{padding-bottom:10px}
+.doc summary{cursor:pointer;font-weight:700;padding:10px 0;list-style-position:outside}
+.doc summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+.doc .credit{margin-top:36px;padding-top:12px;border-top:2px solid var(--line);color:var(--soft);font-size:.95rem}
+.draft-banner{background:var(--sun);color:#1C2A44;font-weight:700;text-align:center;padding:8px 16px;font-size:.95rem}
+.doc .print-btn{margin:4px 0 0}
+@media print{
+  .docnav,.site-foot,.draft-banner,.print-btn,.no-print{display:none !important}
+  html,body{background:#fff !important;color:#000 !important;font-size:11pt}
+  .doc{max-width:none;padding:0}
+  .doc h2{break-after:avoid;border-top:1px solid #999}
+  .doc tr,.doc .callout{break-inside:avoid}
+  .doc h3{break-after:avoid}
+  .tablewrap{overflow:visible}
+  .doc a{color:#000;text-decoration:none}
+  .doc details{box-shadow:none;padding:0}
+  .doc .callout,.tablewrap{box-shadow:none;border:1px solid #999}
+  .card-page{break-before:page}
+}
+.doc blockquote.principles{margin:16px 0;padding:6px 20px;border-left:6px solid var(--line);background:var(--paper);border-radius:0 12px 12px 0;color:var(--ink)}
+.doc .signature{margin-top:22px;font-style:italic}
+.grownup-links{margin-top:10px;font-size:.95rem}
+.grownup-links a,.sync a,.msg .muted a{color:var(--accent);font-weight:700}
+.site-foot .foot-links a{font-weight:700}
