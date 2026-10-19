@@ -217,7 +217,7 @@ Voice.init();
 // ---------- helpers ----------
 const pct = (c, n) => (n ? Math.round(100 * c / n) : 0);
 const starsFor = p => (p >= 90 ? 3 : p >= 70 ? 2 : p >= 40 ? 1 : 0);
-const starHTML = (k, cls = 'stars') => `<span class="${cls}" aria-label="${k} of 3 stars">${'★'.repeat(k)}<span class="off">${'★'.repeat(3 - k)}</span></span>`;
+const starHTML = (k, cls = 'stars') => `<span class="${cls}" role="img" aria-label="${k} of 3 stars">${'★'.repeat(k)}<span class="off">${'★'.repeat(3 - k)}</span></span>`;
 const PRAISE = ["That's right!", 'Nice thinking!', 'You got it!', 'Great job!', 'Yes! Good looking.'];
 function subStats(sub) {
   const ss = S.sessions.filter(s => s.sub === sub);
@@ -416,7 +416,7 @@ function vParent() {
   const allSubs = Object.keys(SUBS);
   const rows = allSubs.map(sub => { const st = subStats(sub); const d = SUBS[sub];
     if (!st) return `<tr><td><b>${d.off}</b><div class="muted" style="font-size:.8rem">${d.kid}</div></td><td colspan="5" class="muted">Not practiced yet</td></tr>`;
-    return `<tr><td><b>${d.off}</b><div class="muted" style="font-size:.8rem">${d.kid}</div></td><td>${st.runs}</td><td>${st.last}%</td><td>${st.best}%</td><td><div class="spark" aria-label="Recent scores ${st.recent.join(', ')} percent">${st.recent.map(p => `<i style="height:${Math.max(6, p)}%"></i>`).join('')}</div></td><td>${Math.round(st.secs)}s</td></tr>`; }).join('');
+    return `<tr><td><b>${d.off}</b><div class="muted" style="font-size:.8rem">${d.kid}</div></td><td>${st.runs}</td><td>${st.last}%</td><td>${st.best}%</td><td><div class="spark" role="img" aria-label="Recent scores ${st.recent.join(', ')} percent">${st.recent.map(p => `<i style="height:${Math.max(6, p)}%"></i>`).join('')}</div></td><td>${Math.round(st.secs)}s</td></tr>`; }).join('');
   const halves = s => {
     if (!s.items || s.items.length < 4) return '<span class="muted">—</span>';
     const h = Math.ceil(s.items.length / 2);
@@ -425,7 +425,7 @@ function vParent() {
     const drop = p(a1) - p(a2);
     return `${p(a1)}% → ${p(a2)}%${drop >= 25 ? ' <span class="flag">fades</span>' : ''}`;
   };
-  const marks = s => s.items ? `<div class="marks" aria-label="${s.items.map(x => x.c ? 'right' : 'wrong').join(', ')}">${s.items.map(x => `<i class="${x.c ? 'ok' : 'no'}" title="${x.s}s${x.r ? ', ' + x.r + ' replay' + (x.r > 1 ? 's' : '') : ''}${x.ch ? ', changed answer' : ''}"></i>`).join('')}</div>` : '<span class="muted">—</span>';
+  const marks = s => s.items ? `<div class="marks" role="img" aria-label="${s.items.map(x => x.c ? 'right' : 'wrong').join(', ')}">${s.items.map(x => `<i class="${x.c ? 'ok' : 'no'}" title="${x.s}s${x.r ? ', ' + x.r + ' replay' + (x.r > 1 ? 's' : '') : ''}${x.ch ? ', changed answer' : ''}"></i>`).join('')}</div>` : '<span class="muted">—</span>';
   const recent = S.sessions.slice(-15).reverse().map(s => `<tr><td>${fmtDate(s.ts)}</td><td>${SUBS[s.sub] ? SUBS[s.sub].off : s.sub}</td><td>${s.mode === 'test' ? 'Test day' : 'Learning'}</td><td>${s.correct}/${s.n}</td><td>${Math.round((s.secs || 0) / 60 * 10) / 10} min</td><td>${marks(s)}</td><td>${halves(s)}</td></tr>`).join('');
   return `<div class="pp"><div class="top"><div><h1>Grown-ups: ${esc(S.name)}</h1><p class="sync">Progress is saved only in this browser, on this device. Nothing is sent anywhere.</p><p class="sync"><a href="guide.html">Parent guide</a> · <a href="faq.html">FAQ</a> · <a href="about.html">About</a></p></div><div class="top-actions"><button class="btn primary" data-act="home">Back to puzzles</button></div></div>
   <h2>Progress by subtest</h2>
