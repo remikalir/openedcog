@@ -280,7 +280,35 @@ function render() {
   $app.innerHTML = fn();
   if (modal) $app.insertAdjacentHTML('beforeend', modal.html);
   pictures($app);
-  const f = $app.querySelector('[data-autofocus]'); if (f) f.focus();
+  if (modal) holdDialog();
+  // Put focus somewhere meaningful on every new screen, so screen readers announce the new
+  // screen instead of falling back to the top of the page: a marked control, else the screen's heading.
+  let f = $app.querySelector(modal ? '.scrim [data-autofocus]' : '[data-autofocus]');
+  if (!f) { f = $app.querySelector('h1'); if (f) f.setAttribute('tabindex', '-1'); }
+  // A button that receives focus on a message screen (Start, I'm ready, Keep going) also carries the
+  // screen's heading and instructions as its description, so a screen reader reads them too.
+  if (f && f.tagName === 'BUTTON' && !modal && !f.hasAttribute('aria-describedby')) {
+    const ids = [];
+    const h = $app.querySelector('.msg h1'), say = $app.querySelector('.msg .say');
+    if (h) { h.id = h.id || 'screen-title'; ids.push(h.id); }
+    if (say) { say.id = say.id || 'screen-say'; ids.push(say.id); }
+    if (ids.length) f.setAttribute('aria-describedby', ids.join(' '));
+  }
+  if (f) f.focus();
+}
+// Screen-reader announcements for things that change without a new screen (like puzzle feedback).
+function announce(msg) {
+  const el = document.getElementById('sr-announce'); if (!el) return;
+  el.textContent = ''; setTimeout(() => { el.textContent = msg; }, 60);
+}
+// While a dialog is open, everything behind it is inert: not clickable, not focusable, not read aloud.
+function holdDialog() {
+  [...$app.children].forEach(c => { if (!c.classList.contains('scrim')) c.inert = true; });
+  document.querySelectorAll('.site-foot').forEach(c => { c.inert = true; });
+}
+function releaseDialog() {
+  [...$app.children].forEach(c => { c.inert = false; });
+  document.querySelectorAll('.site-foot').forEach(c => { c.inert = false; });
 }
 
 function vWelcome() {
@@ -307,7 +335,7 @@ function vHome() {
   const lastTest = fam => { const s = S.sessions.filter(x => x.mode === 'test' && FAMS[fam].subs.includes(x.sub)); return s.length ? `Last tried ${fmtDate(s[s.length - 1].ts)}` : 'Not tried yet'; };
   const tile = sub => { const st = subStats(sub); const k = st ? starsFor(st.best) : 0; const d = SUBS[sub];
     return `<button class="tile" data-act="skill" data-sub="${sub}"><span class="ti" aria-hidden="true">${d.ic}</span><span class="tn">${d.kid}</span>${starHTML(k, 'tst')}<span class="toff">${d.off}</span></button>`; };
-  return `<div class="top"><div><div class="hello">Hi, ${esc(S.name || 'there')}!</div><p class="muted">Pick a pretend test day, or practice one kind of puzzle.</p>
+  return `<div class="top"><div><h1 class="hello">Hi, ${esc(S.name || 'there')}!</h1><p class="muted">Pick a pretend test day, or practice one kind of puzzle.</p>
   <div class="who"><button class="link" data-act="pick">${DB.kids.length > 1 ? `Not ${esc(S.name)}? Switch` : 'Add another child'}</button></div></div>
   <div class="top-actions"><button class="btn" data-act="howto">How the test works</button><button class="btn" data-act="gate">Grown-ups</button></div></div>
   <h2 class="sect">Pretend test day</h2>
@@ -376,7 +404,7 @@ function vQuestion() {
     fb = `<div class="fb show ${ok ? 'good' : 'bad'}"><b>${ok ? esc(run.praise) : 'Not quite.'}</b>${esc(it.explain)}</div>`;
   } else fb = '<div class="fb"></div>';
   const showCaption = S.settings.captions && run.sub !== 'sc';
-  return `<div class="qwrap ${S.settings.captions ? '' : 'nocap'}"><div class="qbar"><div class="qtitle">${d.kid}${inPractice ? '<span class="qtag">Practice</span>' : run.mode === 'skill' ? '<span class="qtag">Learning mode</span>' : ''}</div>
+  return `<h1 class="sr-only">${esc(d.kid)}. Puzzle ${idx + 1} of ${total}. ${esc(it.prompt)}</h1><div class="qwrap ${S.settings.captions ? '' : 'nocap'}"><div class="qbar"><div class="qtitle">${d.kid}${inPractice ? '<span class="qtag">Practice</span>' : run.mode === 'skill' ? '<span class="qtag">Learning mode</span>' : ''}</div>
   <div class="qprog">Puzzle ${idx + 1} of ${total}</div>
   <button class="hear ${run.speaking ? 'playing' : ''}" data-act="hear" aria-label="Hear the question again">🔊 Hear it again</button></div>
   <div class="qmain"><div class="stim pop">${it.stim}</div>
@@ -384,7 +412,7 @@ function vQuestion() {
   <div class="answers" role="radiogroup" aria-label="Answer choices">${it.choices.map((c, i) => `<button class="ans ${ansCls(i)}" role="radio" aria-checked="${sel === i}" data-act="choose" data-i="${i}" ${fbm && checked ? 'disabled' : ''}><span class="sr-only">Answer ${'ABCD'[i]}: </span><div class="ai">${c}</div><span class="bub" aria-hidden="true">${'ABCD'[i]}</span></button>`).join('')}</div>
   ${fb}</div>
   <div class="qfoot"><div>${!fbm && run.qi > 0 ? '<button class="btn" data-act="back">Back</button>' : '<button class="link" data-act="quit">Stop</button>'}</div>
-  <button class="btn primary go" data-act="${goAct}" ${goDis ? 'disabled' : ''}>${goLabel}</button></div></div>`;
+  <button class="btn primary go" data-act="${goAct}" ${goDis ? 'disabled' : ''} ${fbm && checked ? 'data-autofocus' : ''}>${goLabel}</button></div></div>`;
 }
 
 function vResults() {
@@ -407,8 +435,8 @@ function vReview() {
 
 let gateQ = [6, 7];
 function vGate() {
-  return `<div class="msg pop"><h1>Grown-ups only</h1><p class="say">What is ${gateQ[0]} × ${gateQ[1]}?</p>
-  <form class="row gate" data-form="gate"><input name="a" inputmode="numeric" maxlength="3" autocomplete="off" data-autofocus aria-label="Answer"><button class="btn primary" type="submit">Enter</button></form>
+  return `<div class="msg pop"><h1>Grown-ups only</h1><p class="say" id="gateq">What is ${gateQ[0]} × ${gateQ[1]}?</p>
+  <form class="row gate" data-form="gate"><input name="a" inputmode="numeric" maxlength="3" autocomplete="off" data-autofocus aria-labelledby="gateq"><button class="btn primary" type="submit">Enter</button></form>
   <p class="muted" id="gatemsg" style="min-height:1.4em"></p><div class="row"><button class="link" data-act="home">Back</button></div></div>`;
 }
 
@@ -547,6 +575,7 @@ $app.addEventListener('click', e => {
       run.checked = true; run.praise = PRAISE[Math.floor(Math.random() * PRAISE.length)];
       render();
       const ok = sel === it.answer;
+      announce((ok ? run.praise : 'Not quite.') + ' ' + it.explain);
       speakCurrent(ok ? run.praise : 'Not quite. ' + it.explain);
       break;
     }
@@ -586,13 +615,20 @@ function openModal(kind) {
     reset: [`Erase ${S ? S.name : ''}'s progress?`, 'This removes every score and session for this child on this device. The name and settings stay. Save a backup file first if you might want it later.', 'Erase', 'Cancel'],
     removekid: [`Remove ${S ? S.name : ''}?`, 'This removes this child and all of their progress from this device. Save a backup file first if you might want it later.', 'Remove', 'Cancel'],
   }[kind];
-  modal = { kind, html: `<div class="scrim" role="dialog" aria-modal="true" aria-labelledby="mt"><div class="modal pop"><h2 id="mt">${esc(txt[0])}</h2><p>${esc(txt[1])}</p><div class="row"><button class="btn" data-act="mcancel">${esc(txt[3])}</button><button class="btn primary" data-act="${kind === 'reset' ? 'mreset' : kind === 'removekid' ? 'mremove' : 'mconfirm'}" data-autofocus>${esc(txt[2])}</button></div></div></div>` };
+  modal = { kind, html: `<div class="scrim" role="dialog" aria-modal="true" aria-labelledby="mt" aria-describedby="md"><div class="modal pop"><h2 id="mt">${esc(txt[0])}</h2><p id="md">${esc(txt[1])}</p><div class="row"><button class="btn" data-act="mcancel">${esc(txt[3])}</button><button class="btn primary" data-act="${kind === 'reset' ? 'mreset' : kind === 'removekid' ? 'mremove' : 'mconfirm'}" data-autofocus>${esc(txt[2])}</button></div></div></div>` };
+  modal.returnTo = document.activeElement;
   $app.insertAdjacentHTML('beforeend', modal.html);
   pictures($app.querySelector('.scrim'));
+  holdDialog();
   const f = $app.querySelector('.scrim [data-autofocus]'); if (f) f.focus();
   if (kind === 'done') Voice.say(txt[0] + ' ' + txt[1]);
 }
-function closeModal() { modal = null; const s = $app.querySelector('.scrim'); if (s) s.remove(); }
+function closeModal() {
+  const back = modal && modal.returnTo;
+  modal = null; const s = $app.querySelector('.scrim'); if (s) s.remove();
+  releaseDialog();
+  if (back && document.contains(back)) back.focus();
+}
 
 $app.addEventListener('change', e => {
   if (e.target.id !== 'importfile') return;
@@ -624,7 +660,18 @@ $app.addEventListener('submit', e => {
   }
 });
 document.addEventListener('keydown', e => {
+  if (modal && e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+  if (modal && e.key === 'Tab') { // keep Tab cycling between the dialog's buttons
+    const btns = [...$app.querySelectorAll('.scrim button')]; if (!btns.length) return;
+    const i = btns.indexOf(document.activeElement);
+    const next = e.shiftKey ? (i <= 0 ? btns.length - 1 : i - 1) : (i === btns.length - 1 ? 0 : i + 1);
+    e.preventDefault(); btns[next].focus(); return;
+  }
   if (view !== 'q' || modal) return;
+  // Enter moves on (Check, Go, or Done) unless focus is already on a control that Enter would press itself.
+  if (e.key === 'Enter' && !document.activeElement.closest('button, a, input, select, textarea')) {
+    const go = $app.querySelector('.go'); if (go && !go.disabled) { e.preventDefault(); go.click(); } return;
+  }
   const k = e.key.toUpperCase(); const map = { A: 0, B: 1, C: 2, D: 3, 1: 0, 2: 1, 3: 2, 4: 3 };
   if (k in map && !(feedbackMode() && run.checked)) { const btn = $app.querySelector(`.ans[data-i="${map[k]}"]`); if (btn) btn.click(); }
 });

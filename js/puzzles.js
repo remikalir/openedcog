@@ -242,7 +242,7 @@ const G = (() => {
   ];
   const NRL = [['same', 'add1', 'add2', 'sub1'], ['add2', 'add3', 'sub2', 'dbl', 'sub1'], ['add3', 'add4', 'sub3', 'sub4', 'half', 'dbl']];
   const valid = x => Number.isInteger(x) && x >= 1 && x <= 10;
-  const objs = (e, n) => `<div class="objs n${n}">${Array(n).fill(`<span>${e}</span>`).join('')}</div>`;
+  const objs = (e, n) => `<div class="objs n${n}" role="img" aria-label="${n} ${e}">${Array(n).fill(`<span aria-hidden="true">${e}</span>`).join('')}</div>`;
   const numCard = n => `<span class="numc">${n}</span>`;
   function naItem(level) {
     for (let t = 0; t < 500; t++) {

@@ -160,10 +160,11 @@ p{margin:.4em 0}
 
 /* parent */
 .pp h2{margin:26px 0 10px}
-table{border-collapse:collapse;width:100%;background:var(--paper);border-radius:12px;overflow:hidden;font-size:.95rem}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
 th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
 th{font-weight:700;color:var(--soft);font-size:.85rem}
-.tablewrap{overflow-x:auto;border-radius:12px;box-shadow:inset 0 0 0 2px var(--line)}
+.tablewrap{overflow-x:auto;border-radius:12px;border:2px solid var(--line);background:var(--paper)}
+.tablewrap tbody tr:last-child td{border-bottom:0}
 .spark{display:flex;align-items:flex-end;gap:3px;height:28px}
 .spark i{display:block;width:8px;background:var(--accent);border-radius:2px 2px 0 0;min-height:2px}
 .marks{display:flex;flex-wrap:wrap;gap:3px;max-width:190px}
@@ -243,9 +244,14 @@ img.emoji{display:inline-block;height:1em;width:1em;margin:0 .04em;vertical-alig
 .doc .callout{background:var(--paper);border-radius:12px;box-shadow:inset 0 0 0 2px var(--line);padding:12px 18px;margin:14px 0}
 .doc .callout.key{box-shadow:inset 0 0 0 2px var(--line), inset 6px 0 0 var(--accent)}
 .doc .toc{columns:2 220px;padding-left:1.2em;margin:6px 0 0}
-.doc details{background:var(--paper);border-radius:12px;box-shadow:inset 0 0 0 2px var(--line);padding:2px 16px;margin:8px 0}
-.doc details[open]{padding-bottom:10px}
-.doc summary{cursor:pointer;font-weight:700;padding:10px 0;list-style-position:outside}
+.doc details{background:var(--paper);border-radius:12px;box-shadow:inset 0 0 0 2px var(--line);padding:2px 22px;margin:10px 0;--mk:1.5em}
+.doc details[open]{padding-bottom:12px}
+.doc details>:not(summary){margin-left:var(--mk)}
+.doc summary{cursor:pointer;font-weight:700;padding:14px 0;list-style:none;display:flex;align-items:baseline;gap:0}
+.doc summary::-webkit-details-marker{display:none}
+.doc summary::before{content:"";flex:none;width:.5em;height:.5em;margin-right:calc(var(--mk) - .5em - 3px);border-right:3px solid var(--accent);border-bottom:3px solid var(--accent);transform:translateY(-.12em) rotate(-45deg)}
+.doc details[open]>summary::before{transform:translateY(-.25em) rotate(45deg)}
+@media (prefers-reduced-motion:no-preference){.doc summary::before{transition:transform .15s ease}}
 .doc summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
 .doc .credit{margin-top:36px;padding-top:12px;border-top:2px solid var(--line);color:var(--soft);font-size:.95rem}
 .draft-banner{background:var(--sun);color:#1C2A44;font-weight:700;text-align:center;padding:8px 16px;font-size:.95rem}
@@ -260,6 +266,8 @@ img.emoji{display:inline-block;height:1em;width:1em;margin:0 .04em;vertical-alig
   .tablewrap{overflow:visible}
   .doc a{color:#000;text-decoration:none}
   .doc details{box-shadow:none;padding:0}
+  .doc summary::before{display:none}
+  .doc details>:not(summary){margin-left:0}
   .doc .callout,.tablewrap{box-shadow:none;border:1px solid #999}
   .card-page{break-before:page}
 }
@@ -270,3 +278,6 @@ img.emoji{display:inline-block;height:1em;width:1em;margin:0 .04em;vertical-alig
 .site-foot .foot-links a{font-weight:700}
 .doc .principle{margin-top:26px}
 .doc .principle b{font-size:1.12rem}
+/* headings that receive focus when a screen changes don't need a visible ring */
+h1[tabindex="-1"]:focus{outline:none}
+h1.hello{font-size:2.4rem;margin:0}
