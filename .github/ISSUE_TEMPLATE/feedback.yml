@@ -1,0 +1,33 @@
+name: Something else
+description: A problem with the site, an accessibility barrier, a question, or an idea.
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for writing. **Please don't include your child's name or anything personal.** Everything on this page is public.
+
+        Many questions are answered in the [FAQ](https://remikalir.github.io/openedcog/faq.html).
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is this about?
+      options:
+        - Something isn't working
+        - Accessibility (screen reader, keyboard, contrast, or something else)
+        - A question
+        - An idea or suggestion
+        - Helping out (reviewing, translating, adapting)
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Tell us more
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser (if something isn't working)
+      placeholder: For example, iPhone with Safari

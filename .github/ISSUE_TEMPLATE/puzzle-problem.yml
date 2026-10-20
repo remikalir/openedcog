@@ -1,0 +1,50 @@
+name: Report a puzzle problem
+description: A puzzle that seems wrong, confusing, or unfair, or a picture that's hard to recognize.
+title: "Puzzle problem: "
+labels: ["puzzle"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping make OpenedCog better. You don't need to fill in every box, and a short note is fine.
+
+        **Please don't include your child's name or anything personal.** Everything on this page is public.
+  - type: dropdown
+    id: puzzle-type
+    attributes:
+      label: Which kind of puzzle?
+      options:
+        - Picture pairs (Picture Analogies)
+        - Listen and choose (Sentence Completion)
+        - Picture groups (Picture Classification)
+        - Number pairs (Number Analogies)
+        - Number sentences (Number Puzzles)
+        - Bead patterns (Number Series)
+        - Shape pairs (Figure Matrices)
+        - Paper folding (Paper Folding)
+        - Shape groups (Figure Classification)
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What seems wrong?
+      description: For example, "two answers could both be right," "I can't tell what this picture is," or "the explanation doesn't match."
+    validations:
+      required: true
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot (optional)
+      description: A screenshot of the puzzle helps a lot. Drag the image into this box, or paste it.
+  - type: input
+    id: puzzle-id
+    attributes:
+      label: Puzzle ID (optional, for reviewers)
+      description: If you're using the review page, the ID in the corner of the card, such as PA-17.
+  - type: input
+    id: device
+    attributes:
+      label: Device and browser (optional)
+      placeholder: For example, iPad with Safari, or Chromebook with Chrome

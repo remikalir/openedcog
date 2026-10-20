@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Frequently asked questions
+    url: https://remikalir.github.io/openedcog/faq.html
+    about: Answers about what OpenedCog is, privacy, and using it with your child.
+  - name: Parent guide
+    url: https://remikalir.github.io/openedcog/guide.html
+    about: Step-by-step help coaching a young child with OpenedCog.

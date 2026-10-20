@@ -1,0 +1,15 @@
+{
+  "name": "OpenedCog: free, open puzzle practice",
+  "short_name": "OpenedCog",
+  "description": "Free, open practice puzzles in the format of the CogAT Level 8 (grade 2). No accounts, no tracking.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#EEF3FA",
+  "theme_color": "#EEF3FA",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

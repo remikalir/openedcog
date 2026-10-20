@@ -64,7 +64,12 @@ js/pictures.js    swaps emoji for the bundled Twemoji pictures (shared by both p
 review.html       every verbal item with its answer, for reviewers (not linked from the practice site)
 fonts/            Andika (SIL International), with its license in fonts/OFL.txt
 emoji/            the Twemoji pictures the puzzles use (CC BY 4.0), with their license
-tools/            update-emoji.mjs refreshes emoji/; check-items.mjs checks the verbal item banks
+icons/            browser-tab and Home Screen icons, made from the Twemoji puzzle piece
+og-image.png      the picture shown in link previews (LinkedIn, Slack, messages)
+manifest.webmanifest  name and icons for "Add to Home Screen"
+tools/            update-emoji.mjs refreshes emoji/; check-items.mjs checks the verbal item banks;
+                  make-images.py regenerates icons/, og-image.png, and .github/social-preview.png
+.github/          issue forms ("Report a puzzle problem", "Something else") and GitHub's preview image
 ```
 
 ### Pictures
@@ -93,6 +98,6 @@ OpenedCog was created by Remi Kalir in collaboration with Claude.
 
 - **Code** is under the [MIT License](LICENSE).
 - **Content** is under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). That covers the puzzle items, explanations, spoken directions, tips, and guide text, including the verbal item banks and the wording inside `js/puzzles.js` and `js/app.js`. If you reuse or adapt them, credit "OpenedCog by Remi Kalir" and link to this repository.
-- **Pictures** are from [Twemoji](https://github.com/jdecked/twemoji), © Twitter, Inc. (2014–2021) and Jason Sofonia & Justine De Caires (2022–present), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The same license as OpenedCog's own content.
+- **Pictures**, including the puzzle-piece icon and the link-preview images built from it, are from [Twemoji](https://github.com/jdecked/twemoji), © Twitter, Inc. (2014–2021) and Jason Sofonia & Justine De Caires (2022–present), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The same license as OpenedCog's own content.
 - **The Andika typeface** is © SIL International and licensed under the SIL Open Font License 1.1 (see `fonts/OFL.txt`).
-- **Contact:** open an issue on this repository.
+- **Contact:** [report a puzzle problem](https://github.com/remikalir/openedcog/issues/new?template=puzzle-problem.yml) or [open another kind of issue](https://github.com/remikalir/openedcog/issues/new/choose).
