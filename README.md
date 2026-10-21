@@ -37,6 +37,7 @@ OpenedCog is a static website that gives children practice with all nine subtest
   - Clearing browsing data erases progress.
   - Private windows don't keep it.
   - Safari on iPhone and iPad erases a site's data after 7 days of using Safari without visiting that site. Adding the site to the Home Screen avoids this.
+  - On iPhone and iPad, the Home Screen icon keeps its own storage, separate from Safari's, so progress made in a Safari tab doesn't appear when the site is opened from the icon. A backup file moves it across (confirmed on an iPhone, October 2026).
   - The Grown-ups page explains all of this and offers the backup file.
 
 ## Run it locally

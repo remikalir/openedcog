@@ -486,7 +486,7 @@ function vParent() {
   <h2>Keep a backup</h2>
   <div class="notes">
     <p>Because nothing is stored online, progress lives only in this browser. It can be lost if you clear your browsing history or site data, use a private window, or switch browsers or devices.</p>
-    <p><b>On iPhone and iPad:</b> Safari erases a website's saved data if you use Safari for 7 days without opening that site. Adding OpenedCog to your Home Screen (Share button, then “Add to Home Screen”) avoids this.</p>
+    <p><b>On iPhone and iPad:</b> Safari erases a website's saved data if you use Safari for 7 days without opening that site. Adding OpenedCog to your Home Screen (Share button, then “Add to Home Screen”) avoids this. Always open it from the icon, which keeps its own progress, separate from Safari's. To move progress from Safari, save a backup file here while in Safari, then open OpenedCog from the icon and load it.</p>
     <p>A backup file keeps progress safe and lets you move it to another device. It includes every child on this device. Keep it somewhere private, since it holds your children's names and scores.</p>
     <div class="backup"><button class="btn primary" data-act="export">Save a backup file</button>
     <button class="btn" data-act="import">Load a backup file</button><input id="importfile" class="sr-only" type="file" accept=".json,application/json" tabindex="-1" aria-hidden="true"></div>
