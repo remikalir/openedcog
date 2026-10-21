@@ -677,5 +677,21 @@ document.addEventListener('keydown', e => {
 view = S ? 'home' : 'welcome';
 render();
 pictures(document.querySelector('.privacy-note'));
+
+// On phone-width screens, show the privacy note above the learn-more links so it's visible
+// without scrolling. The elements are moved (not just restyled) so the reading and Tab order
+// screen readers and keyboards follow always matches what's on screen.
+const privacyNote = document.querySelector('.privacy-note'), siteLinks = document.querySelector('.site-links');
+const narrow = matchMedia('(max-width: 760px)');
+const placePrivacy = () => {
+  if (!privacyNote || !siteLinks) return;
+  const first = narrow.matches ? privacyNote : siteLinks, second = first === privacyNote ? siteLinks : privacyNote;
+  if (first.nextElementSibling === second) return;
+  const had = document.activeElement, keep = had && (privacyNote.contains(had) || siteLinks.contains(had));
+  second.before(first);
+  if (keep) had.focus({ preventScroll: true });
+};
+placePrivacy();
+narrow.addEventListener('change', placePrivacy);
 })();
 
